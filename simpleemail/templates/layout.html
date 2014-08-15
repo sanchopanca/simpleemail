@@ -1,0 +1,26 @@
+<!doctype html>
+<title>Simple email</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>Simple email</h1>
+  <div class=metanav>
+  {% if current_user.is_anonymous() %}
+    <a href="{{ url_for('log_in') }}">Login</a>
+    <a href="{{ url_for('register') }}">Registration</a>
+  {% else %}
+    You're logged as <strong>{{ current_user.login }}</strong>
+    <br>
+    <a href="{{ url_for('my_subscribes')}}">My Subscribes</a>
+    <br>
+    <a href="{{ url_for('channel_list') }}">Channel List</a>
+    <br>
+    <a href="{{ url_for('send') }}">Send a message to subscribes</a>
+    <br>
+    <a href="{{ url_for('log_out') }}">Logout</a>
+  {% endif %}
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+</div>

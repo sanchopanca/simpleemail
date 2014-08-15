@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Send message to subscribers</h2>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('send') }}" method=post>
+    {{ form.csrf_token }}
+    <dl>
+      <dt>Text:
+      <dd><input type=text name=text></dd>
+      <dd><input type=submit value=Send>
+    </dl>
+  </form>
+{% endblock %}
