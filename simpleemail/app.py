@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 import os.path
 
@@ -139,7 +140,7 @@ def unsubscribe():
 def send():
     form = SendForm()
     if form.validate_on_submit():
-        text = form.text.data
+        text = unicode(form.text.data)
         subject = current_user.channel.name
         print current_user.channel.users
         for user in current_user.channel.users:

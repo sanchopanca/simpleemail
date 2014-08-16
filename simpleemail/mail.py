@@ -20,7 +20,7 @@ class MessageSender(object):
 
     def send_message(self, sender, to, subject, text):
         sended = False
-        msg = email.mime.text.MIMEText(text)
+        msg = email.mime.text.MIMEText(text, _charset='utf-8')
         msg['From'] = sender
         msg['To'] = to
         #msg['Date'] = email.Utils.formatdate(localtime=True)
