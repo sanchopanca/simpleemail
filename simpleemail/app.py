@@ -6,12 +6,13 @@ par_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                        os.path.pardir)
 sys.path.append(par_dir)
 
-from flask import Flask, request, session, g, redirect, url_for
-from flask import abort, render_template, flash
+from flask import Flask, request, redirect, url_for
+from flask import render_template
 from flask_wtf import CsrfProtect
 
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_login import current_user
+from flask_bootstrap import Bootstrap
 
 from simpleemail import models, db, mail, registration
 from simpleemail.forms import RegisterForm, LoginForm, SubscribeForm
@@ -27,6 +28,8 @@ PASSWORD = 'default'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+Bootstrap(app)
+
 CsrfProtect(app)
 login_manger = LoginManager(app)
 assistant = registration.Assistant()
@@ -40,7 +43,7 @@ def load_user(user_id):
 @app.route('/')
 def index():
     print current_user.is_anonymous()
-    return render_template('layout.html')
+    return render_template('index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -149,13 +152,5 @@ def send():
     return render_template('send.html', form=form)
 
 
-@app.route('/debug')
-#@login_required
-def debug():
-    db.tst()
-    return 'debug'
-
-
 if __name__ == '__main__':
-    #db.create_db()
     app.run()

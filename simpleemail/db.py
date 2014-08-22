@@ -1,14 +1,20 @@
 import hashlib
 
-from simpleemail import models
-from simpleemail.models import User, Channel
+
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
 
 
-session = models.Session()
+from simpleemail import config
+
+Session = sessionmaker()
+engine = create_engine('sqlite:///{0}'.format(config.DB_FILE), echo=False)
+Session.configure(bind=engine)
 
 
-def create_db():
-    models.create_all()
+session = Session()
+
+from models import Channel, User
 
 
 def channel_get_by_id(channel_id):
@@ -45,6 +51,3 @@ def tst():
     #user_add('user1', 'password1', '1@1', 'channel1')
     print session.query(User).all()
 
-
-if __name__ == '__main__':
-    create_db()

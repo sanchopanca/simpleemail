@@ -1,27 +1,26 @@
 {% extends "layout.html" %}
-{% block body %}
-  <h2>Login</h2>
+{% block content %}
+  {{ super() }}
+  <div class="container">
+  <h2>Channel list</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   {% for channel in channels %}
   {% if channel in user.subscribes %}
   <form action="{{ url_for('unsubscribe') }}" method=post>
   {{ u_form.csrf_token }}
-    <dl>
-      <dt> {{ channel.name }}:
-      <input type="hidden" name="channel_id" value="{{ channel.id }}">
+      <p> {{ channel.name }}: </p>
+      <p><input type="hidden" name="channel_id" value="{{ channel.id }}"></p>
         <input type="hidden" name="return_to" value="channel_list">
-      <dd><input type=submit value=Unsubscribe>
-    </dl>
+      <p><button class="btn btn-primary">Unsubscribe</button></p>
   </form>
   {% else %}
   <form action="{{ url_for('subscribe') }}" method=post>
   {{ s_form.csrf_token }}
-    <dl>
-      <dt> {{ channel.name }}:
+      <p> {{ channel.name }}:</p>
       <input type="hidden" name="channel_id" value="{{ channel.id }}">
-      <dd><input type=submit value=Subscribe>
-    </dl>
+      <p><button class="btn btn-primary">Subscribe</button></p>
   </form>
   {% endif %}
   {% endfor %}
+  </div>
 {% endblock %}

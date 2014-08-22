@@ -1,26 +1,13 @@
 import hashlib
 
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Table, Column, Integer, String
-from sqlalchemy.orm import sessionmaker, relationship, backref
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from flask_login import UserMixin
 
-import config
-
-#from simpleemail import db
-#import simpleemail.db
-Session = sessionmaker()
-engine = create_engine('sqlite:///{0}'.format(config.DB_FILE), echo=False)
-Session.configure(bind=engine)
-#session = Session()
-
 Base = declarative_base()
 
-
-def create_all():
-    Base.metadata.create_all(engine)
 
 # many to many
 user_channel = Table('user_channel', Base.metadata,
@@ -50,10 +37,6 @@ class User(Base, UserMixin):
                "email=%s, channel=%s" % (self.id, self.login,
                                          self.password_hash, self.email,
                                          self.channel.name)
-
-#    @staticmethod
-#    def get(user_id):
-#        return simpleemail.db.user_get_by_id(int(user_id))
 
     def subscribe(self, channel):
         self.subscribes.append(channel)

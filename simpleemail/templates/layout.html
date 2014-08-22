@@ -1,26 +1,27 @@
-<!doctype html>
-<title>Simple email</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1>Simple email</h1>
-  <div class=metanav>
-  {% if current_user.is_anonymous() %}
-    <a href="{{ url_for('log_in') }}">Login</a>
-    <a href="{{ url_for('register') }}">Registration</a>
-  {% else %}
-    You're logged as <strong>{{ current_user.login }}</strong>
-    <br>
-    <a href="{{ url_for('my_subscribes')}}">My Subscribes</a>
-    <br>
-    <a href="{{ url_for('channel_list') }}">Channel List</a>
-    <br>
-    <a href="{{ url_for('send') }}">Send a message to subscribes</a>
-    <br>
-    <a href="{{ url_for('log_out') }}">Logout</a>
-  {% endif %}
-  </div>
-  {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+{% extends "bootstrap/base.html" %}
+    {% block content %}
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-inner">
+                    <a class="navbar-brand" href="{{ url_for('index') }}">Simple email</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        {% if current_user.is_anonymous() %}
+                        <li><a href="{{ url_for('log_in') }}">Login</a></li>
+                        <li><a href="{{ url_for('register') }}">Registration</a></li>
+                        {% else %}
+                        <li><a href="{{ url_for('my_subscribes')}}">My Subscribes</a></li>
+                        <li><a href="{{ url_for('channel_list') }}">Channel List</a></li>
+                        <li><a href="{{ url_for('send') }}">Send a message to subscribes</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">{{ current_user.login }}</a></li>
+                        <li><a href="{{ url_for('log_out') }}">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    {% endblock %}
+    {% block title %}Simple Email{% endblock %}
