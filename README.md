@@ -9,4 +9,4 @@ Web приложение, которое позволяет создавать �
 Перед запуском поправить `config.ini`
 
 Зависимости:
-`flask, sqlalchemy, Flask-WTF, Flask-Login`
+`flask, sqlalchemy, Flask-WTF, Flask-Login, flask-bootstrap`
